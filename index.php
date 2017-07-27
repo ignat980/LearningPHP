@@ -6,23 +6,12 @@
     </head>
     <body>
       <?php
-        $numbers = array(8,15,16,23,42,4);
+        $result1 = true;
+        $result2 = false;
       ?>
-      Count: <?= count($numbers);?><br>
-      Max value: <?= max($numbers);?><br>
-      Min value: <?= min($numbers);?><br>
-      <br>
-      <pre>
-        <!-- In-place sorts!!! -->
-        Sort: <?php sort($numbers); print_r($numbers)?><br>
-        Reverse sort: <?php rsort($numbers); print_r($numbers)?><br>
-      </pre>
-      <br>
-      Implode: <?= $num_string = implode(" * ", $numbers)?> <br>
-      Explode: <?php print_r($num_string = explode(" * ", $num_string))?> <br>
-      <br>
-      Is 15 in the array?: <?= in_array(15, $numbers)?><br>
-      Is 19 in the array?: <?= in_array(19, $numbers)?><br>
+      Result1: <?= $result1?><br>
+      Result2: <?= $result2?><br>
 
+      Result2 is a boolean?: <?= is_bool($result2)?>
     </body>
 </html>
