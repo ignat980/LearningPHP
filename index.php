@@ -6,19 +6,23 @@
     </head>
     <body>
       <?php
-        $assoc = array('first_name' => 'Kevin', 'last_name' => 'Smith');
+        $numbers = array(8,15,16,23,42,4);
       ?>
-      <?= $assoc['first_name'];?><br>
-      <?= $assoc['first_name'] . " " . $assoc['last_name'];?><br>
+      Count: <?= count($numbers);?><br>
+      Max value: <?= max($numbers);?><br>
+      Min value: <?= min($numbers);?><br>
+      <br>
+      <pre>
+        <!-- In-place sorts!!! -->
+        Sort: <?php sort($numbers); print_r($numbers)?><br>
+        Reverse sort: <?php rsort($numbers); print_r($numbers)?><br>
+      </pre>
+      <br>
+      Implode: <?= $num_string = implode(" * ", $numbers)?> <br>
+      Explode: <?php print_r($num_string = explode(" * ", $num_string))?> <br>
+      <br>
+      Is 15 in the array?: <?= in_array(15, $numbers)?><br>
+      Is 19 in the array?: <?= in_array(19, $numbers)?><br>
 
-      <?php $assoc['first_name'] = 'Larry';?>
-      <?= $assoc['first_name'] . " " . $assoc['last_name'];?><br>
-
-      <?php
-        $numbers = array(4,8,15,16,23,42);
-        // ==
-        $numbers = array(0 => 4, 1 => 8, 2 => 15, 3 => 16, 4 => 23, 5 => 42);
-        echo $numbers[0];
-      ?>
     </body>
 </html>
