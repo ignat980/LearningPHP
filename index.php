@@ -10,8 +10,14 @@ and open the template in the editor.
         <title>I'm learning to PHP</title>
     </head>
     <body>
-        <?php echo "Hello world!"; ?><br />
-        <?php echo "Hello" . " world!";?><br />
-        <?php echo "2+3="; echo 2+3; ?>
+        <?php
+        $var1 = 10;
+        echo $var1;
+
+        echo "<br />";
+
+        $var1 = 100;
+        echo $var1;
+        ?>
     </body>
 </html>
