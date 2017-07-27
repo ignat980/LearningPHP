@@ -11,17 +11,29 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        echo "Hello World<br />";
-        echo 'Hello World<br />';
+        $first = "The quick brown fox";
+        $second = " jumped over the lazy dog.";
 
-        $greeting = "Hello";
-        $target = "World";
-        $phrase = $greeting . " " . $target;
-        echo $phrase . "<br />";
-
-        echo "$phrase Again<br />";
-        echo '$phrase Again<br />';
-        echo "{$phrase}Again<br />";
+        $third = $first;
+        $third .= $second;
+        echo $third;
         ?>
+        <br />
+        Lowercase: <?= strtolower($third) ?> <br>
+        Uppercase: <?= strtoupper($third) ?> <br>
+        Uppercase first: <?= ucfirst($third) ?> <br>
+        Uppercase words: <?= ucwords($third) ?> <br>
+        <br>
+        Length <?= strlen($third) ?><br>
+        Trim: <?= "A" . trim(" B C D ") . "E" ?><br>
+        Find: <?= strstr($third, "brown") ?><br>
+        Replace by string: <?= str_replace("quick", "super-fast", $third) ?><br>
+        <br>
+        Repeat: <?= str_repeat($third, 2) ?><br>
+        Make substring: <?= substr($third, 5, 10) ?><br>
+        Find position: <?= strpos($third, "brown") ?><br>
+        Find character: <?= strchr($third, "z") ?><br>
+        
+
     </body>
 </html>
