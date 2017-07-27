@@ -6,20 +6,25 @@
     </head>
     <body>
       <?php
-        $max_width = 980; //variable
+        function say_hello() {
+          echo "Hello World! <br>";
+        }
 
-        define("MAX_WIDTH", 980); //constant
-        echo MAX_WIDTH;
-      ?>
-      <br>
-      <?php
-        //can't change value
-        // MAX_WIDTH = MAX_WIDTH + 1;
-        // echo MAX_WIDTH;
+        say_hello();
 
-        //can't redefine it either
-        // define("MAX_WIDTH", 981);
-        // echo MAX_WIDTH;
+        function say_hello_to($word) {
+          echo "Hello {$word}! <br>";
+        }
+
+        say_hello_to("Me");
+        say_hello_to("Everyone");
+
+        say_hello_loudly();
+        
+        //function definitions get hoisted
+        function say_hello_loudly() {
+          echo "HELLO WOOOOORLD!!<br>";
+        }
       ?>
     </body>
 </html>
