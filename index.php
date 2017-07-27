@@ -10,30 +10,30 @@ and open the template in the editor.
         <title>I'm learning to PHP</title>
     </head>
     <body>
-        <?php
-        $first = "The quick brown fox";
-        $second = " jumped over the lazy dog.";
-
-        $third = $first;
-        $third .= $second;
-        echo $third;
-        ?>
-        <br />
-        Lowercase: <?= strtolower($third) ?> <br>
-        Uppercase: <?= strtoupper($third) ?> <br>
-        Uppercase first: <?= ucfirst($third) ?> <br>
-        Uppercase words: <?= ucwords($third) ?> <br>
-        <br>
-        Length <?= strlen($third) ?><br>
-        Trim: <?= "A" . trim(" B C D ") . "E" ?><br>
-        Find: <?= strstr($third, "brown") ?><br>
-        Replace by string: <?= str_replace("quick", "super-fast", $third) ?><br>
-        <br>
-        Repeat: <?= str_repeat($third, 2) ?><br>
-        Make substring: <?= substr($third, 5, 10) ?><br>
-        Find position: <?= strpos($third, "brown") ?><br>
-        Find character: <?= strchr($third, "z") ?><br>
-        
+      <?php
+        $var1 = 3;
+        $var2 = 4;
+      ?>
+      Basic Math: <?= ((1+2+$var1)*$var2)/2 -5; ?><br>
+      <br>
+      Absolute value: <?= abs(0-300) ?><br>
+      Exponentiating: <?= pow(2,8) ?><br>
+      Square root: <?= sqrt(100) ?><br>
+      Modulo: <?= fmod(20,7) ?><br>
+      Random: <?= rand() ?><br>
+      Random (min, max): <?= rand(1,10) ?><br>
+      <br>
+      += : <?= $var2 += 4 ?><br>
+      -= : <?= $var2 -= 4 ?><br>
+      *= : <?= $var2 *= 3 ?><br>
+      /= : <?= $var2 /= 4 ?><br>
+      <br>
+      Increment: <?= ++$var2 ?><br>
+      Decrement: <?= --$var2 ?><br>
+      <br>
+      <?= 1 + 2 ?><br>
+      <?= 1 + "2" ?><br>
+      <?= 1 + "2 houses" ?><br>
 
     </body>
 </html>
