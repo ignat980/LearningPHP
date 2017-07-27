@@ -10,30 +10,23 @@ and open the template in the editor.
         <title>I'm learning to PHP</title>
     </head>
     <body>
-      <?php
-        $var1 = 3;
-        $var2 = 4;
-      ?>
-      Basic Math: <?= ((1+2+$var1)*$var2)/2 -5; ?><br>
+      <?= $float = 3.14 ?><br/>
+      <?= $float + 7 ?><br/>
+      <?= 4/3 ?><br/>
+      <br/>
+      Round: <?= round($float, 1) ?><br/>
+      Ceiling: <?= ceil($float) ?><br/>
+      Floor: <?= floor($float) ?><br/>
       <br>
-      Absolute value: <?= abs(0-300) ?><br>
-      Exponentiating: <?= pow(2,8) ?><br>
-      Square root: <?= sqrt(100) ?><br>
-      Modulo: <?= fmod(20,7) ?><br>
-      Random: <?= rand() ?><br>
-      Random (min, max): <?= rand(1,10) ?><br>
+      <?= $integer = 3 ?>
+      <?= "Is {$integer} an integer? " . is_int($integer) ?><br/>
+      <?= "Is {$float} an integer? " . is_int($float) ?><br/>
       <br>
-      += : <?= $var2 += 4 ?><br>
-      -= : <?= $var2 -= 4 ?><br>
-      *= : <?= $var2 *= 3 ?><br>
-      /= : <?= $var2 /= 4 ?><br>
+      <?= "Is {$integer} a float? " . is_float($integer) ?><br/>
+      <?= "Is {$float} a float? " . is_float($float) ?><br/>
       <br>
-      Increment: <?= ++$var2 ?><br>
-      Decrement: <?= --$var2 ?><br>
+      <?= "Is {$integer} numeric? " . is_numeric($integer) ?><br/>
+      <?= "Is {$float} numeric? " . is_numeric($float) ?><br/>
       <br>
-      <?= 1 + 2 ?><br>
-      <?= 1 + "2" ?><br>
-      <?= 1 + "2 houses" ?><br>
-
     </body>
 </html>
