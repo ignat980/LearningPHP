@@ -7,8 +7,9 @@
   <body>
     <?php
       $link_name = "Second Page";
-      $id = 2;
+      $id = 5;
+      $company = "Johnson & Johnson"
     ?>
-    <a href="second_page.php?id=<?= $id ?>"><?= $link_name ?></a>
+    <a href="second_page.php?id=<?= $id ?>&company=<?= rawurlencode($company) ?>"><?= $link_name ?></a>
   </body>
 </html>
