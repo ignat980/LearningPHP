@@ -6,35 +6,26 @@
   </head>
   <body>
     <?php
-      function say_hello() {
-        echo "Hello World! <br>";
-      }
+      $number = 99;
+      $string = "Bug?<br>";
+      $array = array(1 => "Homepage", 2 => "About Us", 3 => "Services");
 
-      say_hello();
-
-      function say_hello_to($word) {
-        echo "Hello {$word}! <br>";
-      }
-
-      say_hello_to("Me");
-      say_hello_to("Everyone");
-
-      say_hello_loudly();
-
-      //function definitions get hoisted
-      function say_hello_loudly() {
-        echo "HELLO WOOOOORLD!!<br>";
-      }
-
-      function paint($room='office',$color='red') {
-        return "The color of the {$room} is {$color}.<br>";
-      }
-
-      echo paint();
-      echo paint('bedroom','blue');
-      echo paint('bedroom', null);
-      echo paint('bedroom');
-      echo paint('blue');
+      var_dump($number);
+      var_dump($string);
+      var_dump($array);
     ?>
+    <br>
+    <pre>
+      <?php
+        print_r(get_defined_vars());
+
+        function say_hello_to($word) {
+          echo "Hello {$word}! <br>";
+          var_dump(debug_backtrace());
+        }
+
+        say_hello_to("Everyone");
+      ?>
+    </pre>
   </body>
 </html>
