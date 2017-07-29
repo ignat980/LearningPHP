@@ -2,7 +2,7 @@
 <html lang='en'>
   <head>
     <meta charset='UTF-8'>
-    <title></title>
+    <title>Form Processing</title>
   </head>
   <body>
     <pre>
@@ -10,8 +10,30 @@
     </pre>
     <br>
     <?php
-      $username = $_POST['username'];
-      $password = $_POST['password'];
+
+    if (isset($_POST['submit'])) {
+      echo "Form is submitted<br>";
+
+      if (isset($_POST['username'])) {
+        $username = $_POST['username'];
+      } else {
+        $username = '';
+      }
+      if (isset($_POST['password'])) {
+        $password = $_POST['password'];
+      } else {
+        $password = '';
+      }
+
+      //or use ternary operator
+
+      $username = isset($_POST['username']) ? $_POST['username'] : "";
+      $password = isset($_POST['password']) ? $_POST['password'] : "";
+
+    } else {
+      $username = '';
+      $password = '';
+    }
 
       echo "{$username}: {$password}";
     ?>
