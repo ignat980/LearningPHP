@@ -7,8 +7,4 @@
     header("Location: {$new_location}");
     exit;
   }
-  function identity($arg) {
-    return $arg;
-  }
-  $interpolate = "identity";
 ?>
