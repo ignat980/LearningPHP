@@ -7,7 +7,7 @@
   <head>
     <title>GBI - <?= $page_title ?></title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" media="all" href="../stylesheets/staff.css">
+    <link rel="stylesheet" media="all" href="<?= url_for('/stylesheets/staff.css')?>">
   </head>
   <body>
     <header>
@@ -16,6 +16,6 @@
 
     <navigation>
       <ul>
-        <li><a href="index.php">Menu</a></li>
+        <li><a href="<?= url_for('/staff/')?>">Menu</a></li>
       </ul>
     </navigation>
