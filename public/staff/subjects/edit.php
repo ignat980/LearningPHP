@@ -1,13 +1,25 @@
 <?php
   require_once '../../../private/initialize.php';
+
+  if (! isset($_GET['id'])){
+    redirect('staff/subjects/');
+  }
+  $id = $_GET['id'];
+  $menu_name = '';
+  $position = '';
+  $visible = '';
+
   $test = isset($_GET['test']) ? $_GET['test'] : '';
 
-    if ($test == '404') {
-      error_404();
-    } elseif ($test == '500') {
-      error_500();
-    } elseif ($test == 'redirect') {
-      redirect('/staff/subjects/index');
+  if (is_request_a('POST')) {
+    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
+    $position = isset($_POST['position']) ? $_POST['position'] : '';
+    $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
+
+    echo 'Form parameters<br>';
+    echo "Menu name: ${menu_name}<br>";
+    echo "Position: ${position}<br>";
+    echo "Visible: ${visible}<br>";
   }
 
   $page_title = 'Edit Subject';
@@ -19,10 +31,10 @@
   <div class="subject edit">
     <h1>Edit Subject</h1>
 
-    <form action="" method="post">
+    <form action="<?= url_for('/staff/subjects/edit?id='.htmlspecialchars(urlencode($id)))?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="" /></dd>
+        <dd><input type="text" name="menu_name" value="<?= $menu_name?>" /></dd>
       </dl>
       <dl>
         <dt>Position</dt>

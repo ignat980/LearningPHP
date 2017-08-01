@@ -29,4 +29,8 @@
     header("Location: ".url_for($location));
     exit();
   }
+
+  function is_request_a($method) {
+    return $_SERVER['REQUEST_METHOD'] == $method;
+  }
 ?>
