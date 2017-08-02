@@ -1,13 +1,8 @@
 <?php
   require_once '../../../private/initialize.php';
 
-  // TODO: Stop using hardcoded database
-  $subjects = [
-    ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
-    ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'Consumer'],
-    ['id' => '3', 'position' => '3', 'visible' => '1', 'menu_name' => 'Small Business'],
-    ['id' => '4', 'position' => '4', 'visible' => '1', 'menu_name' => 'Commercial'],
-  ];
+  $subject_set =  find_all_subjects();
+
 
   $page_title = 'Subjects';
   include SHARED_PATH.'/staff_header.php';
@@ -32,7 +27,7 @@
         <th>&nbsp;</th>
   	  </tr>
 
-      <?php foreach ($subjects as $subject) { ?>
+      <?php while ($subject = mysqli_fetch_assoc($subject_set)) { ?>
         <tr>
           <td><?= htmlspecialchars($subject['id']) ?></td>
           <td><?= htmlspecialchars($subject['position']) ?></td>
@@ -44,6 +39,7 @@
     	  </tr>
       <?php } ?>
   	</table>
+    <?php mysqli_free_result($subject_set)?>
   </div>
 </div>
 
