@@ -1,9 +1,8 @@
 <?php
   require_once '../../../private/initialize.php';
 
-  $subject_set =  find_all_subjects();
-
-
+  $subject_set =  select_all('subjects');
+  
   $page_title = 'Subjects';
   include SHARED_PATH.'/staff_header.php';
 ?>

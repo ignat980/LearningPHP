@@ -1,13 +1,7 @@
 <?php
   require_once '../../../private/initialize.php';
 
-  // TODO: Stop using hardcoded database
-  $pages = [
-    ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'First'],
-    ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'Second'],
-    ['id' => '3', 'position' => '3', 'visible' => '1', 'menu_name' => 'Third'],
-    ['id' => '4', 'position' => '4', 'visible' => '1', 'menu_name' => 'Fourth'],
-  ];
+  $page_set = select_all('pages', 'subject_id ASC, position ASC');
 
   $page_title = 'Pages';
   include SHARED_PATH.'/staff_header.php';
@@ -24,6 +18,7 @@
     <table class="list">
       <tr>
         <th>ID</th>
+        <th>Subject ID</th>
         <th>Position</th>
         <th>Visible</th>
         <th>Name</th>
@@ -32,9 +27,10 @@
         <th>&nbsp;</th>
       </tr>
 
-      <?php foreach ($pages as $page) { ?>
+      <?php while ($page = mysqli_fetch_assoc($page_set)) { ?>
         <tr>
           <td><?= htmlspecialchars($page['id']) ?></td>
+          <td><?= htmlspecialchars($page['subject_id']) ?></td>
           <td><?= htmlspecialchars($page['position']) ?></td>
           <td><?= $page['visible'] ? 'true' : 'false' ?></td>
           <td><?= htmlspecialchars($page['menu_name']) ?></td>
@@ -44,6 +40,7 @@
         </tr>
       <?php } ?>
     </table>
+    <?php mysqli_free_result($page_set)?>
   </div>
 </div>
 

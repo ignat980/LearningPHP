@@ -1,8 +1,13 @@
 <?php
-  function find_all_subjects() {
+  function select_all($table, $ordering='position ASC') {
     global $db;
-    
-    $sql ='SELECT * FROM subjects ORDER BY position ASC';
-    return mysqli_query($db, $sql);
+
+    $sql ="SELECT * FROM ${table} ORDER BY ${ordering}";
+    $result = mysqli_query($db, $sql);
+    if (!$result) {
+    	exit("Database query failed.");
+    } else {
+      return $result;
+    };
   }
 ?>
