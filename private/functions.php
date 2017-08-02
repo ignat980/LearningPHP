@@ -30,7 +30,7 @@
     exit();
   }
 
-  function is_request_a($method) {
+  function request_is_a($method) {
     return $_SERVER['REQUEST_METHOD'] == $method;
   }
 ?>

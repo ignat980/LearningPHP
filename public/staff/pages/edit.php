@@ -20,16 +20,16 @@
     echo "Visible: ${visible}<br>";
   }
 
-  $page_title = 'Edit Subject';
+  $page_title = 'Edit Page';
   include SHARED_PATH.'/staff_header.php'
 ?>
 
 <div id="content">
   <a class="back-link" href=".">« Back to List</a>
-  <div class="subject edit">
-    <h1>Edit Subject</h1>
+  <div class="page new">
+    <h1>Edit Page</h1>
 
-    <form action="<?= url_for('/staff/subjects/edit?id='.htmlspecialchars(urlencode($id)))?>" method="post">
+    <form action="<?= url_for('/staff/pages/edit?id='.htmlspecialchars(urlencode($id)))?>" method="post">
       <dl>
         <dt>Menu Name</dt>
         <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($menu_name)?>" ></dd>
@@ -45,12 +45,12 @@
       <dl>
         <dt>Visible</dt>
         <dd>
-          <input type="hidden" name="visible" value="0">
-          <input type="checkbox" name="visible" value="1"<?= $visible == '1' ? ' checked' : null?> />
+          <input type="hidden" name="visible" value="0" >
+          <input type="checkbox" name="visible" value="1"<?= $visible == '1' ? ' checked' : null?> >
         </dd>
       </dl>
       <div id="operations">
-        <input type="submit" value="Edit Subject">
+        <input type="submit" value="Edit Page" >
       </div>
     </form>
   </div>
