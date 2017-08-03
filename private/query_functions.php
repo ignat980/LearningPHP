@@ -37,6 +37,20 @@
     }
   }
 
+  function delete_subject($id) {
+    global $db;
+
+    $sql = "DELETE FROM subjects WHERE id='{$id}' LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    if ($result) {
+      return true;
+    } else {
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+
   function update_subject($subject) {
     global $db;
 

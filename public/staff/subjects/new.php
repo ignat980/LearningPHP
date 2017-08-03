@@ -28,7 +28,6 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="subject new">
     <h1>Create Subject</h1>
-
     <form action="<?= url_for('/staff/subjects/new')?>" method="post">
       <dl>
         <dt>Menu Name</dt>

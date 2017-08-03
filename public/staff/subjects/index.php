@@ -2,7 +2,7 @@
   require_once '../../../private/initialize.php';
 
   $subject_set =  select_all('subjects');
-  
+
   $page_title = 'Subjects';
   include SHARED_PATH.'/staff_header.php';
 ?>
@@ -34,7 +34,7 @@
           <td><?= htmlspecialchars($subject['menu_name']) ?></td>
           <td><a class="action" href="<?= url_for('/staff/subjects/show?id='.htmlspecialchars(urlencode($subject['id'])))?>">View</a></td>
           <td><a class="action" href="<?= url_for('/staff/subjects/edit?id='.htmlspecialchars(urlencode($subject['id'])))?>">Edit</a></td>
-          <td><a class="action" href="#">Delete</a></td>
+          <td><a class="action" href="<?= url_for('/staff/subjects/delete?id='.htmlspecialchars(urlencode($subject['id'])))?>">Delete</a></td>
     	  </tr>
       <?php } ?>
   	</table>

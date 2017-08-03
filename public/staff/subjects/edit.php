@@ -32,8 +32,7 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="subject edit">
     <h1>Edit Subject</h1>
-
-    <form action="<?= url_for('/staff/subjects/edit?id='.htmlspecialchars(urlencode($id)))?>" method="post">
+    <form action="<?= url_for('/staff/subjects/edit?id='), htmlspecialchars(urlencode($id))?>" method="post">
       <dl>
         <dt>Menu Name</dt>
         <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($subject['menu_name'])?>" ></dd>
