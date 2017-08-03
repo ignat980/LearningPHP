@@ -1,19 +1,27 @@
 <?php
   require_once '../../../private/initialize.php';
 
-  $menu_name = '';
-  $position = '';
-  $visible = '';
+  $page_set = select_all('pages');
+  $page_count = mysqli_num_rows($page_set) + 1;
+  mysqli_free_result($page_set);
+
+  $page =[
+    'subject_id' => '',
+    'menu_name' => '',
+    'position' => $page_count,
+    'visible' => '',
+    'content' => ''
+  ];
 
   if (request_is_a('POST')) {
-    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
-    $position = isset($_POST['position']) ? $_POST['position'] : '';
-    $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
+    $page['subject_id'] = (string)$_POST['subject_id'];
+    $page['menu_name'] = (string)$_POST['menu_name'];
+    $page['position'] = (string)$_POST['position'];
+    $page['visible'] = (string)$_POST['visible'];
+    $page['content'] = (string)$_POST['content'];
 
-    echo 'Form parameters<br>';
-    echo "Menu name: {$menu_name}<br>";
-    echo "Position: {$position}<br>";
-    echo "Visible: {$visible}<br>";
+    insert_page($page);
+    redirect('/staff/pages/show?id='.mysqli_insert_id($db));
   }
 
   $page_title = 'Create Page';
@@ -24,17 +32,46 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="page new">
     <h1>Create Page</h1>
-
     <form action="<?= url_for('/staff/pages/new')?>" method="post">
       <dl>
+        <dt>Subject</dt>
+        <dd>
+          <select class="subject_id">
+            <?php
+              $subject_set = select_all('subjects');
+              while ($subject = mysqli_fetch_assoc($subject_set)) {
+                echo "<option value=\"".htmlspecialchars($subject['id'])."\"";
+                if ($page['subject_id'] == $subject['id']) {
+                  echo " selected";
+                }
+                echo ">". htmlspecialchars($subject['menu_name'])."</option>";
+              }
+              mysqli_free_result($subject_set);
+            ?>
+          </select>
+        </dd>
+      </dl>
+      <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($menu_name)?>" ></dd>
+        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($page['menu_name'])?>" ></dd>
+      </dl>
+      <dl>
+        <dt>Subject ID</dt>
+        <dd><input type="text" name="subject_id" value="<?= htmlspecialchars($page['subject_id'])?>" ></dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1"<<?= $position == "1" ? ' selected' : null; ?>>1</option>
+            <?php
+              for ($i=1; $i <= $page_count; $i++) {
+                echo "<option value=\"{$i}\"";
+                if ($page['position'] == $i) {
+                  echo " selected";
+                }
+                echo ">{$i}</option>";
+              }
+            ?>
           </select>
         </dd>
       </dl>
@@ -42,11 +79,17 @@
         <dt>Visible</dt>
         <dd>
           <input type="hidden" name="visible" value="0">
-          <input type="checkbox" name="visible" value="1"<?= $visible == '1' ? ' checked' : null?>>
+          <input type="checkbox" name="visible" value="1"<?= $page['visible'] == '1' ? ' checked' : null?>>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Content</dt>
+        <dd>
+          <textarea name="content" rows="10" cols="60"><?= htmlspecialchars($page['content'])?></textarea>
         </dd>
       </dl>
       <div id="operations">
-        <input type="submit" value="Create Page">
+        <input type="submit" value="Create Page" >
       </div>
     </form>
   </div>

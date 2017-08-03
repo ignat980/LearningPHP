@@ -17,7 +17,7 @@
     update_subject($subject);
     redirect("/staff/subjects/show?id={$id}");
   } else {
-    $subject = find_subject_by_id($id);
+    $subject = find_by_id_from('subjects', $id);
 
     $subject_set = select_all('subjects');
     $subject_count = mysqli_num_rows($subject_set);

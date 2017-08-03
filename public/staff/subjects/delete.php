@@ -10,7 +10,7 @@
     delete_subject($id);
     redirect('/staff/subjects/');
   } else {
-    $subject = find_subject_by_id($id);
+    $subject = find_by_id_from('subjects', $id);
   }
 
   $page_title = 'Delete Subject';

@@ -2,22 +2,28 @@
   require_once '../../../private/initialize.php';
 
   if (! isset($_GET['id'])){
-    redirect('staff/subjects/');
+    redirect('staff/pages/');
   }
   $id = $_GET['id'];
-  $menu_name = '';
-  $position = '';
-  $visible = '';
 
   if (request_is_a('POST')) {
-    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
-    $position = isset($_POST['position']) ? $_POST['position'] : '';
-    $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
+    $page =[
+      'id' => $id,
+      'subject_id' => (string)$_POST['subject_id'],
+      'menu_name' => (string)$_POST['menu_name'],
+      'position' => (string)$_POST['position'],
+      'visible' => (string)$_POST['visible'],
+      'content' => (string)$_POST['content']
+    ];
 
-    echo 'Form parameters<br>';
-    echo "Menu name: {$menu_name}<br>";
-    echo "Position: {$position}<br>";
-    echo "Visible: {$visible}<br>";
+    update_page($page);
+    redirect("/staff/pages/show?id={$id}");
+  } else {
+    $page = find_by_id_from('pages', $id);
+
+    $page_set = select_all('pages');
+    $page_count = mysqli_num_rows($page_set);
+    mysqli_free_result($page_set);
   }
 
   $page_title = 'Edit Page';
@@ -26,27 +32,58 @@
 
 <div id="content">
   <a class="back-link" href=".">« Back to List</a>
-  <div class="page new">
+  <div class="page edit">
     <h1>Edit Page</h1>
-
-    <form action="<?= url_for('/staff/pages/edit?id='.htmlspecialchars(urlencode($id)))?>" method="post">
+    <form action="<?= url_for('/staff/pages/edit?id='), htmlspecialchars(urlencode($id))?>" method="post">
+      <dl>
+        <dt>Subject</dt>
+        <dd>
+          <select class="subject_id">
+            <?php
+              $subject_set = select_all('subjects');
+              while ($subject = mysqli_fetch_assoc($subject_set)) {
+                echo "<option value=\"".htmlspecialchars($subject['id'])."\"";
+                if ($page['subject_id'] == $subject['id']) {
+                  echo " selected";
+                }
+                echo ">". htmlspecialchars($subject['menu_name'])."</option>";
+              }
+              mysqli_free_result($subject_set);
+            ?>
+          </select>
+        </dd>
+      </dl>
       <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($menu_name)?>" ></dd>
+        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($page['menu_name'])?>" ></dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1"<<?= $position == "1" ? ' selected' : null; ?>>1</option>
+            <?php
+              for ($i=1; $i <= $page_count; $i++) {
+                echo "<option value=\"{$i}\"";
+                if ($page['position'] == $i) {
+                  echo " selected";
+                }
+                echo ">{$i}</option>";
+              }
+            ?>
           </select>
         </dd>
       </dl>
       <dl>
         <dt>Visible</dt>
         <dd>
-          <input type="hidden" name="visible" value="0" >
-          <input type="checkbox" name="visible" value="1"<?= $visible == '1' ? ' checked' : null?> >
+          <input type="hidden" name="visible" value="0">
+          <input type="checkbox" name="visible" value="1"<?= $page['visible'] == '1' ? ' checked' : null?>>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Content</dt>
+        <dd>
+          <textarea name="content" rows="10" cols="60"><?= htmlspecialchars($page['content'])?></textarea>
         </dd>
       </dl>
       <div id="operations">

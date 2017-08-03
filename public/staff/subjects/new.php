@@ -12,9 +12,9 @@
   ];
 
   if (request_is_a('POST')) {
-    $subject['menu_name'] = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
-    $subject['position'] = isset($_POST['position']) ? $_POST['position'] : '';
-    $subject['visible'] = isset($_POST['visible']) ? $_POST['visible'] : '';
+    $subject['menu_name'] = (string)$_POST['menu_name'];
+    $subject['position'] = (string)$_POST['position'];
+    $subject['visible'] = (string)$_POST['visible'];
 
     insert_subject($subject);
     redirect('/staff/subjects/show?id='.mysqli_insert_id($db));

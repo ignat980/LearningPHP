@@ -18,7 +18,7 @@
     <table class="list">
       <tr>
         <th>ID</th>
-        <th>Subject ID</th>
+        <th>Subject</th>
         <th>Position</th>
         <th>Visible</th>
         <th>Name</th>
@@ -27,16 +27,17 @@
         <th>&nbsp;</th>
       </tr>
 
-      <?php while ($page = mysqli_fetch_assoc($page_set)) { ?>
+      <?php while ($page = mysqli_fetch_assoc($page_set)) {
+        $subject = find_by_id_from('subjects', $page['subject_id'])?>
         <tr>
           <td><?= htmlspecialchars($page['id']) ?></td>
-          <td><?= htmlspecialchars($page['subject_id']) ?></td>
+          <td><?= htmlspecialchars($subject['menu_name']) ?></td>
           <td><?= htmlspecialchars($page['position']) ?></td>
           <td><?= $page['visible'] ? 'true' : 'false' ?></td>
           <td><?= htmlspecialchars($page['menu_name']) ?></td>
           <td><a class="action" href="<?= url_for('/staff/pages/show?id='.htmlspecialchars(urlencode($page['id'])))?>">View</a></td>
           <td><a class="action" href="<?= url_for('/staff/pages/edit?id='.htmlspecialchars(urlencode($page['id'])))?>">Edit</a></td>
-          <td><a class="action" href="#">Delete</a></td>
+          <td><a class="action" href="<?= url_for('/staff/pages/delete?id='.htmlspecialchars(urlencode($page['id'])))?>">Delete</a></td>
         </tr>
       <?php } ?>
     </table>

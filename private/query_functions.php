@@ -1,4 +1,5 @@
 <?php
+  //Select everything from table
   function select_all($table) {
     global $db;
 
@@ -12,45 +13,38 @@
     };
   }
 
-  function find_subject_by_id($id) {
+  //Select by id from table
+  function find_by_id_from($table, $id) {
     global $db;
 
-    $result = mysqli_query($db, "SELECT * FROM subjects WHERE id='{$id}'");
+    $result = mysqli_query($db, "SELECT * FROM ${table} WHERE id='{$id}'");
     if (!$result)
       exit("Database query failed.");
     $subject = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
+
     return $subject;
   }
 
+  //Insert by id
   function insert_subject($subject) {
     global $db;
 
     $sql = "INSERT INTO subjects (menu_name, position, visible) VALUES ".
     "('{$subject['menu_name']}', '{$subject['position']}', '{$subject['visible']}')";
-    if (mysqli_query($db, $sql)) {
-      return true;
-    } else {
-      echo mysqli_error($db);
-      db_disconnect($db);
-      exit;
-    }
-  }
 
-  function delete_subject($id) {
+    return perform_query($db, $sql);
+  }
+  function insert_page($page) {
     global $db;
 
-    $sql = "DELETE FROM subjects WHERE id='{$id}' LIMIT 1";
-    $result = mysqli_query($db, $sql);
-    if ($result) {
-      return true;
-    } else {
-      echo mysqli_error($db);
-      db_disconnect($db);
-      exit;
-    }
+    $sql = "INSERT INTO pages (subject_id, menu_name, position, visible, content) VALUES ".
+    "('{$page['subject_id']}', '{$page['menu_name']}', '{$page['position']}', '{$page['visible']}', '{$page['content']}')";
+
+    return perform_query($db, $sql);
   }
 
+  //Update by id
   function update_subject($subject) {
     global $db;
 
@@ -60,6 +54,40 @@
     "visible='{$subject['visible']}' ".
     "WHERE id='{$subject['id']}' LIMIT 1";
 
+    return perform_query($db, $query);
+  }
+  function update_page($page) {
+    global $db;
+
+    $query = "UPDATE pages SET ".
+    "subject_id='{$page['subject_id']}', ".
+    "menu_name='{$page['menu_name']}', ".
+    "position='{$page['position']}', ".
+    "visible='{$page['visible']}', ".
+    "content='{$page['content']}' ".
+    "WHERE id='{$page['id']}' LIMIT 1";
+
+    return perform_query($db, $query);
+  }
+
+  //Delete by id
+  function delete_subject($id) {
+    global $db;
+    return delete_from('subjects', $id);
+  }
+  function delete_page($id) {
+    global $db;
+    return delete_from('pages', $id);
+  }
+  function delete_from($table, $id) {
+    global $db;
+
+    $sql = "DELETE FROM ${table} WHERE id='{$id}' LIMIT 1";
+
+    return perform_query($db, $sql);
+  }
+
+  function perform_query($db, $query) {
     if (mysqli_query($db, $query)) {
       return true;
     } else {
