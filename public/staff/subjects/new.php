@@ -1,16 +1,22 @@
 <?php
   require_once '../../../private/initialize.php';
 
-  $menu_name = '';
-  $position = '';
-  $visible = '';
+  $subject_set = select_all('subjects');
+  $subject_count = mysqli_num_rows($subject_set) + 1;
+  mysqli_free_result($subject_set);
+
+  $subject =[
+    'menu_name' => '',
+    'position' => $subject_count,
+    'visible' => ''
+  ];
 
   if (request_is_a('POST')) {
-    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
-    $position = isset($_POST['position']) ? $_POST['position'] : '';
-    $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
+    $subject['menu_name'] = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
+    $subject['position'] = isset($_POST['position']) ? $_POST['position'] : '';
+    $subject['visible'] = isset($_POST['visible']) ? $_POST['visible'] : '';
 
-    $result = insert_subject($menu_name, $position, $visible);
+    insert_subject($subject);
     redirect('/staff/subjects/show?id='.mysqli_insert_id($db));
   }
 
@@ -26,13 +32,21 @@
     <form action="<?= url_for('/staff/subjects/new')?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($menu_name)?>" ></dd>
+        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($subject['menu_name'])?>" ></dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1"<<?= $position == "1" ? ' selected' : null; ?>>1</option>
+            <?php
+              for ($i=1; $i <= $subject_count; $i++) {
+                echo "<option value=\"{$i}\"";
+                if ($subject['position'] == $i) {
+                  echo " selected";
+                }
+                echo ">{$i}</option>";
+              }
+            ?>
           </select>
         </dd>
       </dl>
@@ -40,7 +54,7 @@
         <dt>Visible</dt>
         <dd>
           <input type="hidden" name="visible" value="0">
-          <input type="checkbox" name="visible" value="1"<?= $visible == '1' ? ' checked' : null?>>
+          <input type="checkbox" name="visible" value="1"<?= $subject['visible'] == '1' ? ' checked' : null?>>
         </dd>
       </dl>
       <div id="operations">
