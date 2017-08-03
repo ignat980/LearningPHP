@@ -10,10 +10,8 @@
     $position = isset($_POST['position']) ? $_POST['position'] : '';
     $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
 
-    echo 'Form parameters<br>';
-    echo "Menu name: ${menu_name}<br>";
-    echo "Position: ${position}<br>";
-    echo "Visible: ${visible}<br>";
+    $result = insert_subject($menu_name, $position, $visible);
+    redirect('/staff/subjects/show?id='.mysqli_insert_id($db));
   }
 
   $page_title = 'Create Subject';

@@ -1,7 +1,7 @@
 <?php
   require_once '../../../private/initialize.php';
 
-  $page_set = select_all('pages', 'subject_id ASC, position ASC');
+  $page_set = select_all('pages');
 
   $page_title = 'Pages';
   include SHARED_PATH.'/staff_header.php';

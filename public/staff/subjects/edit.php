@@ -5,19 +5,19 @@
     redirect('staff/subjects/');
   }
   $id = $_GET['id'];
-  $menu_name = '';
-  $position = '';
-  $visible = '';
 
   if (request_is_a('POST')) {
-    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name'] : '';
-    $position = isset($_POST['position']) ? $_POST['position'] : '';
-    $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
+    $subject =[
+      'id' => $id,
+      'menu_name' => (string)$_POST['menu_name'],
+      'position' => (string)$_POST['position'],
+      'visible' => (string)$_POST['visible']
+    ];
 
-    echo 'Form parameters<br>';
-    echo "Menu name: ${menu_name}<br>";
-    echo "Position: ${position}<br>";
-    echo "Visible: ${visible}<br>";
+    update_subject($subject);
+    redirect("/staff/subjects/show?id={$id}");
+  } else {
+    $subject = find_subject_by_id($id);
   }
 
   $page_title = 'Edit Subject';
@@ -32,13 +32,13 @@
     <form action="<?= url_for('/staff/subjects/edit?id='.htmlspecialchars(urlencode($id)))?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($menu_name)?>" ></dd>
+        <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($subject['menu_name'])?>" ></dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1"<<?= $position == "1" ? ' selected' : null; ?>>1</option>
+            <option value="1"<<?= $subject['position'] == "1" ? ' selected' : null; ?>>1</option>
           </select>
         </dd>
       </dl>
@@ -46,7 +46,7 @@
         <dt>Visible</dt>
         <dd>
           <input type="hidden" name="visible" value="0">
-          <input type="checkbox" name="visible" value="1"<?= $visible == '1' ? ' checked' : null?> />
+          <input type="checkbox" name="visible" value="1"<?= $subject['visible'] == '1' ? ' checked' : null?> />
         </dd>
       </dl>
       <div id="operations">

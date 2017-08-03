@@ -11,9 +11,9 @@
     $visible = isset($_POST['visible']) ? $_POST['visible'] : '';
 
     echo 'Form parameters<br>';
-    echo "Menu name: ${menu_name}<br>";
-    echo "Position: ${position}<br>";
-    echo "Visible: ${visible}<br>";
+    echo "Menu name: {$menu_name}<br>";
+    echo "Position: {$position}<br>";
+    echo "Visible: {$visible}<br>";
   }
 
   $page_title = 'Create Page';
