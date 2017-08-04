@@ -33,4 +33,18 @@
   function request_is_a($method) {
     return $_SERVER['REQUEST_METHOD'] == $method;
   }
+
+  function display_errors($errors=array()) {
+    $output = '';
+    if (!empty($errors)) {
+      $output .= '<div class="errors">'.
+      'Please fix the following errors'.
+      '<ul>';
+      foreach ($errors as $error) {
+        $output .= '<li>'.htmlspecialchars($error).'</li>';
+      }
+      $output .= '</ul></div>';
+    }
+    return $output;
+  }
 ?>

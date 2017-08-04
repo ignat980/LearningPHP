@@ -9,21 +9,27 @@
   if (request_is_a('POST')) {
     $subject =[
       'id' => $id,
-      'menu_name' => (string)$_POST['menu_name'],
-      'position' => (string)$_POST['position'],
-      'visible' => (string)$_POST['visible']
+      'menu_name' => isset($_POST['menu_name']) ? $_POST['menu_name'] : '',
+      'position' => isset($_POST['position']) ? $_POST['position'] : '',
+      'visible' => isset($_POST['visible']) ? $_POST['visible'] : ''
     ];
 
-    update_subject($subject);
-    redirect("/staff/subjects/show?id={$id}");
+    $result = update_subject($subject);
+    if($result === true) {
+      redirect("/staff/subjects/show?id={$id}");
+    } else {
+      $errors = $result;
+      // var_dump($result);
+    }
   } else {
     $subject = find_by_id_from('subjects', $id);
 
-    $subject_set = select_all('subjects');
-    $subject_count = mysqli_num_rows($subject_set);
-    mysqli_free_result($subject_set);
   }
 
+  $subject_set = select_all('subjects');
+  $subject_count = mysqli_num_rows($subject_set);
+  mysqli_free_result($subject_set);
+  
   $page_title = 'Edit Subject';
   include SHARED_PATH.'/staff_header.php'
 ?>
@@ -32,6 +38,8 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="subject edit">
     <h1>Edit Subject</h1>
+
+    <?= display_errors($errors)?>
     <form action="<?= url_for('/staff/subjects/edit?id='), htmlspecialchars(urlencode($id))?>" method="post">
       <dl>
         <dt>Menu Name</dt>

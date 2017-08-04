@@ -26,9 +26,43 @@
     return $subject;
   }
 
+  function validate_subject($subject) {
+    $errors = [];
+
+    //menu_name
+    if (is_blank($subject['menu_name'])) {
+      $errors[] = 'Name cannot be blank.';
+    }
+    if (!has_length($subject['menu_name'], ['min' => 2, 'max' => '255'])) {
+      $errors[] = 'Name must be between 2 and 255 characters.';
+    }
+
+    // position
+    $position_int = (int) $subject['position'];
+    if ($position_int <= 0) {
+      $errors[] = 'Position must be less than 999.';
+    }
+    if ($position_int > 999) {
+      $errors[] = 'Position must be greater than zero.';
+    }
+
+    //visible
+    $visible_str = (string) $subject['visible'];
+    if (!has_inclusion_in($visible_str, ['0', '1'])) {
+      $errors[] = 'Visible must be true or false.';
+    }
+
+    return $errors;
+  }
+
   //Insert by id
   function insert_subject($subject) {
     global $db;
+
+    $errors = validate_subject($subject);
+    if (!empty($errors)) {
+      return $errors;
+    }
 
     $sql = "INSERT INTO subjects (menu_name, position, visible) VALUES ".
     "('{$subject['menu_name']}', '{$subject['position']}', '{$subject['visible']}')";
@@ -47,6 +81,11 @@
   //Update by id
   function update_subject($subject) {
     global $db;
+
+    $errors = validate_subject($subject);
+    if (!empty($errors)) {
+      return $errors;
+    }
 
     $query = "UPDATE subjects SET ".
     "menu_name='{$subject['menu_name']}', ".

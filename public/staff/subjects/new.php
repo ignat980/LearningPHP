@@ -16,9 +16,18 @@
     $subject['position'] = (string)$_POST['position'];
     $subject['visible'] = (string)$_POST['visible'];
 
-    insert_subject($subject);
-    redirect('/staff/subjects/show?id='.mysqli_insert_id($db));
+    $result = insert_subject($subject);
+    if ($result === true) {
+      $new_id = mysql_insert_id($db);
+      redirect('/staff/subjects/show?id='.mysqli_insert_id($db));
+    } else {
+      $errors = $result;
+    }
   }
+
+  $subject_set = select_all('subjects');
+  $subject_count = mysqli_num_rows($subject_set) + 1;
+  mysqli_free_result($subject_set);
 
   $page_title = 'Create Subject';
   include SHARED_PATH.'/staff_header.php'
@@ -28,6 +37,7 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="subject new">
     <h1>Create Subject</h1>
+    <?= display_errors($errors)?>
     <form action="<?= url_for('/staff/subjects/new')?>" method="post">
       <dl>
         <dt>Menu Name</dt>

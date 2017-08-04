@@ -9,11 +9,11 @@
   if (request_is_a('POST')) {
     $page =[
       'id' => $id,
-      'subject_id' => (string)$_POST['subject_id'],
-      'menu_name' => (string)$_POST['menu_name'],
-      'position' => (string)$_POST['position'],
-      'visible' => (string)$_POST['visible'],
-      'content' => (string)$_POST['content']
+      'subject_id' => isset($_POST['subject_id']) ? $_POST['subject_id'] : '',
+      'menu_name' => isset($_POST['menu_name']) ? $_POST['menu_name'] : '',
+      'position' => isset($_POST['position']) ? $_POST['position'] : '',
+      'visible' => isset($_POST['visible']) ? $_POST['visible'] : '',
+      'content' => isset($_POST['content']) ? $_POST['content'] : ''
     ];
 
     update_page($page);
