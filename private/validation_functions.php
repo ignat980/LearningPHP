@@ -60,7 +60,7 @@ function validate_max_lengths($fields_with_max_lengths) {
 function has_unique_page_menu_name($menu_name, $id=0) {
   global $db;
 
-	$sql = "SELECT * FROM pages WHERE menu_name='{$menu_name}' AND id != '{$id}'";
+	$sql = "SELECT * FROM pages WHERE menu_name='".db_escape($menu_name)."' AND id != '".db_escape($id)."'";
 	$page_set = mysqli_query($db, $sql);
   $page_count = mysqli_num_rows($page_set);
   mysqli_free_result($page_set);

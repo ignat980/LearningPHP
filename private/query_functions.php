@@ -1,4 +1,9 @@
 <?php
+  function db_escape($string) {
+    global $db;
+
+    return mysqli_real_escape_string($db, $string);
+  }
   //Select everything from table
   function select_all($table) {
     global $db;
@@ -17,7 +22,7 @@
   function find_by_id_from($table, $id) {
     global $db;
 
-    $result = mysqli_query($db, "SELECT * FROM ${table} WHERE id='{$id}'");
+    $result = mysqli_query($db, "SELECT * FROM ${table} WHERE id='".db_escape($id)."'");
     if (!$result)
       exit("Database query failed.");
     $subject = mysqli_fetch_assoc($result);
@@ -103,7 +108,11 @@
     }
 
     $sql = "INSERT INTO subjects (menu_name, position, visible) VALUES ".
-    "('{$subject['menu_name']}', '{$subject['position']}', '{$subject['visible']}')";
+    "('".
+    db_escape($subject['menu_name']). "', '".
+    db_escape($subject['position']). "', '".
+    db_escape($subject['visible']).
+    "')";
 
     return perform_query($db, $sql);
   }
@@ -116,7 +125,13 @@
     }
 
     $sql = "INSERT INTO pages (subject_id, menu_name, position, visible, content) VALUES ".
-    "('{$page['subject_id']}', '{$page['menu_name']}', '{$page['position']}', '{$page['visible']}', '{$page['content']}')";
+    "('".
+    db_escape($page['subject_id'])."', '".
+    db_escape($page['menu_name'])."', '".
+    db_escape($page['position'])."', '".
+    db_escape($page['visible'])."', '".
+    db_escape($page['content']).
+    "')";
 
     return perform_query($db, $sql);
   }
@@ -131,10 +146,10 @@
     }
 
     $query = "UPDATE subjects SET ".
-    "menu_name='{$subject['menu_name']}', ".
-    "position='{$subject['position']}', ".
-    "visible='{$subject['visible']}' ".
-    "WHERE id='{$subject['id']}' LIMIT 1";
+    "menu_name='".db_escape($subject['menu_name'])."', ".
+    "position='".db_escape($subject['position'])."', ".
+    "visible='".db_escape($subject['visible'])."' ".
+    "WHERE id='".db_escape($subject['id'])."' LIMIT 1";
 
     return perform_query($db, $query);
   }
@@ -147,12 +162,12 @@
     }
 
     $query = "UPDATE pages SET ".
-    "subject_id='{$page['subject_id']}', ".
-    "menu_name='{$page['menu_name']}', ".
-    "position='{$page['position']}', ".
-    "visible='{$page['visible']}', ".
-    "content='{$page['content']}' ".
-    "WHERE id='{$page['id']}' LIMIT 1";
+    "subject_id='".db_escape($page['subject_id'])."', ".
+    "menu_name='".db_escape($page['menu_name'])."', ".
+    "position='".db_escape($page['position'])."', ".
+    "visible='".db_escape($page['visible'])."', ".
+    "content='".db_escape($page['content'])."' ".
+    "WHERE id='".db_escape($page['id'])."' LIMIT 1";
 
     return perform_query($db, $query);
   }
@@ -169,7 +184,7 @@
   function delete_from($table, $id) {
     global $db;
 
-    $sql = "DELETE FROM ${table} WHERE id='{$id}' LIMIT 1";
+    $sql = "DELETE FROM ${table} WHERE id='".db_escape($id)."' LIMIT 1";
 
     return perform_query($db, $sql);
   }
