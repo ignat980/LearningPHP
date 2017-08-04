@@ -20,8 +20,12 @@
     $page['visible'] = (string)$_POST['visible'];
     $page['content'] = (string)$_POST['content'];
 
-    insert_page($page);
-    redirect('/staff/pages/show?id='.mysqli_insert_id($db));
+    $result = insert_page($page);
+    if ($result === true) {
+      redirect('/staff/pages/show?id='.mysqli_insert_id($db));
+    } else {
+      $errors = $result;
+    }
   }
 
   $page_title = 'Create Page';
@@ -32,11 +36,12 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="page new">
     <h1>Create Page</h1>
+    <?= display_errors($errors)?>
     <form action="<?= url_for('/staff/pages/new')?>" method="post">
       <dl>
         <dt>Subject</dt>
         <dd>
-          <select class="subject_id">
+          <select name="subject_id">
             <?php
               $subject_set = select_all('subjects');
               while ($subject = mysqli_fetch_assoc($subject_set)) {
@@ -54,10 +59,6 @@
       <dl>
         <dt>Menu Name</dt>
         <dd><input type="text" name="menu_name" value="<?= htmlspecialchars($page['menu_name'])?>" ></dd>
-      </dl>
-      <dl>
-        <dt>Subject ID</dt>
-        <dd><input type="text" name="subject_id" value="<?= htmlspecialchars($page['subject_id'])?>" ></dd>
       </dl>
       <dl>
         <dt>Position</dt>

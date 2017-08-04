@@ -16,15 +16,19 @@
       'content' => isset($_POST['content']) ? $_POST['content'] : ''
     ];
 
-    update_page($page);
-    redirect("/staff/pages/show?id={$id}");
+    $result = update_page($page);
+    if ($result === true) {
+      redirect("/staff/pages/show?id={$id}");
+    } else {
+      $errors = $result;
+    }
   } else {
     $page = find_by_id_from('pages', $id);
-
-    $page_set = select_all('pages');
-    $page_count = mysqli_num_rows($page_set);
-    mysqli_free_result($page_set);
   }
+
+  $page_set = select_all('pages');
+  $page_count = mysqli_num_rows($page_set);
+  mysqli_free_result($page_set);
 
   $page_title = 'Edit Page';
   include SHARED_PATH.'/staff_header.php'
@@ -34,11 +38,12 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="page edit">
     <h1>Edit Page</h1>
+    <?= display_errors($errors)?>
     <form action="<?= url_for('/staff/pages/edit?id='), htmlspecialchars(urlencode($id))?>" method="post">
       <dl>
         <dt>Subject</dt>
         <dd>
-          <select class="subject_id">
+          <select name="subject_id">
             <?php
               $subject_set = select_all('subjects');
               while ($subject = mysqli_fetch_assoc($subject_set)) {

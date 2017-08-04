@@ -23,13 +23,12 @@
     }
   } else {
     $subject = find_by_id_from('subjects', $id);
-
   }
 
   $subject_set = select_all('subjects');
   $subject_count = mysqli_num_rows($subject_set);
   mysqli_free_result($subject_set);
-  
+
   $page_title = 'Edit Subject';
   include SHARED_PATH.'/staff_header.php'
 ?>
@@ -38,7 +37,6 @@
   <a class="back-link" href=".">« Back to List</a>
   <div class="subject edit">
     <h1>Edit Subject</h1>
-
     <?= display_errors($errors)?>
     <form action="<?= url_for('/staff/subjects/edit?id='), htmlspecialchars(urlencode($id))?>" method="post">
       <dl>

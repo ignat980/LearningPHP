@@ -40,14 +40,52 @@
     // position
     $position_int = (int) $subject['position'];
     if ($position_int <= 0) {
-      $errors[] = 'Position must be less than 999.';
+      $errors[] = 'Position must be greater than zero.';
     }
     if ($position_int > 999) {
-      $errors[] = 'Position must be greater than zero.';
+      $errors[] = 'Position must be less than 999.';
     }
 
     //visible
     $visible_str = (string) $subject['visible'];
+    if (!has_inclusion_in($visible_str, ['0', '1'])) {
+      $errors[] = 'Visible must be true or false.';
+    }
+
+    return $errors;
+  }
+
+  function validate_page($page) {
+    $errors = [];
+
+    //subject id
+    if (is_blank($page['subject_id'])) {
+      $errors[] = 'Subject cannot be blank';
+    }
+
+    //menu name
+    if (is_blank($page['menu_name'])) {
+      $errors[] = 'Name cannot be blank.';
+    }
+    if (!has_length($page['menu_name'], ['min' => 2, 'max' => '255'])) {
+      $errors[] = 'Name must be between 2 and 255 characters.';
+    }
+    $id = isset($page['id']) ? $page['id'] : '0';
+    if (!has_unique_page_menu_name($page['menu_name'], $id)) {
+      $errors[] = 'Menu name must be unique.';
+    }
+
+    //position
+    $position_int = (int) $page['position'];
+    if ($position_int <= 0) {
+      $errors[] = 'Position must be greater than zero.';
+    }
+    if ($position_int > 999) {
+      $errors[] = 'Position must be less than 999.';
+    }
+
+    //visible
+    $visible_str = (string) $page['visible'];
     if (!has_inclusion_in($visible_str, ['0', '1'])) {
       $errors[] = 'Visible must be true or false.';
     }
@@ -71,6 +109,11 @@
   }
   function insert_page($page) {
     global $db;
+
+    $errors = validate_page($page);
+    if (!empty($errors)) {
+      return $errors;
+    }
 
     $sql = "INSERT INTO pages (subject_id, menu_name, position, visible, content) VALUES ".
     "('{$page['subject_id']}', '{$page['menu_name']}', '{$page['position']}', '{$page['visible']}', '{$page['content']}')";
@@ -97,6 +140,11 @@
   }
   function update_page($page) {
     global $db;
+
+    $errors = validate_page($page);
+    if (!empty($errors)) {
+      return $errors;
+    }
 
     $query = "UPDATE pages SET ".
     "subject_id='{$page['subject_id']}', ".

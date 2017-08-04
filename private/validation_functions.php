@@ -57,19 +57,15 @@ function validate_max_lengths($fields_with_max_lengths) {
 	}
 }
 
-function form_errors($errors=array()) {
-	$output = "";
-	if (!empty($errors)) {
-	  $output .= "<div class=\"error\">";
-	  $output .= "Please fix the following errors:";
-	  $output .= "<ul>";
-	  foreach ($errors as $key => $error) {
-	    $output .= "<li>{$error}</li>";
-	  }
-	  $output .= "</ul>";
-	  $output .= "</div>";
-	}
-	return $output;
+function has_unique_page_menu_name($menu_name, $id=0) {
+  global $db;
+
+	$sql = "SELECT * FROM pages WHERE menu_name='{$menu_name}' AND id != '{$id}'";
+	$page_set = mysqli_query($db, $sql);
+  $page_count = mysqli_num_rows($page_set);
+  mysqli_free_result($page_set);
+
+	return $page_count === 0;
 }
 
 ?>

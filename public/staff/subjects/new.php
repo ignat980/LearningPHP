@@ -18,16 +18,11 @@
 
     $result = insert_subject($subject);
     if ($result === true) {
-      $new_id = mysql_insert_id($db);
       redirect('/staff/subjects/show?id='.mysqli_insert_id($db));
     } else {
       $errors = $result;
     }
   }
-
-  $subject_set = select_all('subjects');
-  $subject_count = mysqli_num_rows($subject_set) + 1;
-  mysqli_free_result($subject_set);
 
   $page_title = 'Create Subject';
   include SHARED_PATH.'/staff_header.php'
