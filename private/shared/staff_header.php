@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>GBI - <?= htmlspecialchars($page_title) ?></title>
+    <title>GBI<?= isset($page_title) ? ' - '.htmlspecialchars($page_title) : '' ?></title>
     <meta charset="UTF-8">
     <link rel="stylesheet" media="all" href="<?= url_for('/stylesheets/staff.css')?>">
   </head>
