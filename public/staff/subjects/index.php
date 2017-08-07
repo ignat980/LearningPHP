@@ -31,7 +31,7 @@
           <td><?= htmlspecialchars($subject['id']) ?></td>
           <td><?= htmlspecialchars($subject['position']) ?></td>
           <td><?= $subject['visible'] ? 'true' : 'false' ?></td>
-          <td><?= htmlspecialchars($subject['menu_name']) ?></td>
+    	    <td><?= htmlspecialchars($subject['menu_name']) ?></td>
           <td><a class="action" href="<?= url_for('/staff/subjects/show?id='.htmlspecialchars(urlencode($subject['id'])))?>">View</a></td>
           <td><a class="action" href="<?= url_for('/staff/subjects/edit?id='.htmlspecialchars(urlencode($subject['id'])))?>">Edit</a></td>
           <td><a class="action" href="<?= url_for('/staff/subjects/delete?id='.htmlspecialchars(urlencode($subject['id'])))?>">Delete</a></td>

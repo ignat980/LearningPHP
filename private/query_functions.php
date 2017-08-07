@@ -198,4 +198,17 @@
       exit;
     }
   }
+
+  function find_pages_by_subject_id($subject_id) {
+    global $db;
+
+    $sql = "SELECT * FROM pages ".
+    "WHERE subject_id='".db_escape($subject_id)."' ".
+    "ORDER BY position ASC";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+  }
+
+
 ?>

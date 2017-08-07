@@ -12,7 +12,7 @@
 <div id="content">
   <a class="back-link" href=".">« Back to List</a><br>
   <div class="page show">
-    <h1>Subject: <?= htmlspecialchars($page['menu_name'])?></h1>
+    <h1>Page: <?= htmlspecialchars($page['menu_name'])?></h1>
 
     <div class="attributes">
       <dl>

@@ -15,17 +15,17 @@
       <a class="action" href="<?= url_for('/staff/pages/new')?>">Create New Page</a>
     </div>
 
-    <table class="list">
-      <tr>
+  	<table class="list">
+  	  <tr>
         <th>ID</th>
         <th>Subject</th>
         <th>Position</th>
         <th>Visible</th>
-        <th>Name</th>
+  	    <th>Name</th>
+  	    <th>&nbsp;</th>
+  	    <th>&nbsp;</th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
+  	  </tr>
 
       <?php while ($page = mysqli_fetch_assoc($page_set)) {
         $subject = find_by_id_from('subjects', $page['subject_id'])?>
